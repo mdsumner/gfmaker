@@ -20,7 +20,8 @@
 #' r <- rasterize(wrld_simpl, raster(wrld_simpl))
 #' gfmaker(r)
 gfmaker <- function(x, max_dim = c(150, 150), code = NULL, name = NULL, ...) {
-  xy <- spbabel::xy_(x)
+  #xy <- spbabel::xy_(x)
+xy <- centroid_(x)
   r <- raster::rasterFromXYZ(xy, digits = 0)
   rdim <- dim(r)[1:2]
   the_dim <- pmin(max_dim, rdim)
@@ -28,7 +29,7 @@ gfmaker <- function(x, max_dim = c(150, 150), code = NULL, name = NULL, ...) {
     dim(r) <- the_dim
   }
   cells <- raster::cellFromXY(r, as.matrix(xy))
-  rc <- tibble::tibble(row = 1L + nrow(r) - raster::rowFromCell(r, cells),
+  rc <- tibble::tibble(row = raster::rowFromCell(r, cells),
                        col = raster::colFromCell(r, cells))
 
   rc[["code"]] <- if (is.null(code))  get_values(x) else code
@@ -45,6 +46,16 @@ gfmaker <- function(x, max_dim = c(150, 150), code = NULL, name = NULL, ...) {
 #     rename(label = ISO3)
 }
 
+centroid_ <- function(x) {
+  if (inherits(x, "Spatial")) {
+    return(setNames(as_tibble(
+      coordinates(rgeos::gCentroid(x, byid = TRUE))), c("x_", "y_")))
+  }
+  if (inherits(x, "sf")) {
+    return(matrix(unlist(sf::st_geometry(sf::st_centroid(x))), ncol = 2))
+  }
+  stop("unsupported type")
+}
 gt0 <- function(x) {
   min(x[x > 0])
 }

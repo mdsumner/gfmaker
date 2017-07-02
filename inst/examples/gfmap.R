@@ -26,7 +26,7 @@ ind <- unique( unlist(st_touches(map1[unlist(st_touches(map1[2,], map1)), ], map
 map1 <- as(map1, "Spatial") %>% slice(ind)
 
 #gf <- gfmaker(map, code = map$ISO2, name = map$NAME)
-gf <- gfmaker(map1, code = as.character(map1$CNTY_ID), name = map1$NAME, max_dim = c(8, 8))
+gf <- gfmaker(map1, code = as.character(map1$CNTY_ID), name = map1$NAME, max_dim = c(12, 12))
 gf <- distinct(gf, row, col, .keep_all = TRUE)
 nn <- 1e3
 
@@ -47,4 +47,4 @@ ggplot(d, aes(x, y)) +
 
 asp <- 1/cos(mean(gf$y_) * pi / 180)
 plot(map1, main = "pure geography", asp = asp)
-plot(gf$col, gf$row, asp = asp, main = "the generated grid")
+plot(gf$col, 1+ max(gf$row) - gf$row, asp = asp, main = "the generated grid")
