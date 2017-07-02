@@ -1,0 +1,9 @@
+Package: gfmaker
+Title: Create 'Geofacet' Grid from 'Spatial'
+Version: 0.0.0.9000
+Authors@R: person("Michael", "Sumner", email = "mdsumner@gmail.com", role = c("aut", "cre"))
+Description: Convert typical spatial data into geofacet grid specifications.
+Depends: R (>= 3.4.0)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
