@@ -19,7 +19,7 @@
 #' gfmaker(wrld_simpl)
 #' r <- rasterize(wrld_simpl, raster(wrld_simpl))
 #' gfmaker(r)
-gfmaker <- function(x, max_dim = c(150, 150), ...) {
+gfmaker <- function(x, max_dim = c(150, 150), code = NULL, name = NULL, ...) {
   xy <- spbabel::xy_(x)
   r <- raster::rasterFromXYZ(xy, digits = 0)
   rdim <- dim(r)[1:2]
@@ -31,7 +31,10 @@ gfmaker <- function(x, max_dim = c(150, 150), ...) {
   rc <- tibble::tibble(row = 1L + nrow(r) - raster::rowFromCell(r, cells),
                        col = raster::colFromCell(r, cells))
 
-  rc[[names(x)[1L]]] <- get_values(x)
+  rc[["code"]] <- if (is.null(code))  get_values(x) else code
+  rc[["name"]] <- if (is.null(name)) rc[[code]] else name
+  rc[["x_"]] <- xy$x_
+  rc[["y_"]] <- xy$y_
   rc
   # https://rpubs.com/cyclemumner/278962
 #
