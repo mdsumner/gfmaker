@@ -19,10 +19,11 @@
 #' gfmaker(wrld_simpl)
 #' r <- rasterize(wrld_simpl, raster(wrld_simpl))
 #' gfmaker(r)
-gfmaker <- function(x, max_dim = c(150, 150), code = NULL, name = NULL, ...) {
+gfmaker <- function(x, max_dim = c(150, 150), code = NULL, name = NULL, ..., r = NULL) {
   #xy <- spbabel::xy_(x)
 xy <- centroid_(x)
-  r <- raster::rasterFromXYZ(xy, digits = 0)
+## thefuck, doesn't work with a full grid?
+if (is.null(r))  r <- raster::rasterFromXYZ(cbind(as.matrix(xy), 0), digits = 0)
   rdim <- dim(r)[1:2]
   the_dim <- pmin(max_dim, rdim)
   if (any(!the_dim == rdim)) {
@@ -33,7 +34,7 @@ xy <- centroid_(x)
                        col = raster::colFromCell(r, cells))
 
   rc[["code"]] <- if (is.null(code))  get_values(x) else code
-  rc[["name"]] <- if (is.null(name)) rc[[code]] else name
+  rc[["name"]] <- if (is.null(name)) rc[["code"]] else name
   rc[["x_"]] <- xy$x_
   rc[["y_"]] <- xy$y_
   rc

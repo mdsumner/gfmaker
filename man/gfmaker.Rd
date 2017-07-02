@@ -4,7 +4,8 @@
 \alias{gfmaker}
 \title{Geofacet structure}
 \usage{
-gfmaker(x, max_dim = c(150, 150), code = NULL, name = NULL, ...)
+gfmaker(x, max_dim = c(150, 150), code = NULL, name = NULL, ...,
+  r = NULL)
 }
 \arguments{
 \item{x}{a spatialish thinger}
