@@ -1,5 +1,5 @@
 Package: gfmaker
-Title: Create 'Geofacet' Grid from 'Spatial'
+Title: Create 'Geofacet' Grid from 'spatial' Data
 Version: 0.0.0.9000
 Authors@R: person("Michael", "Sumner", email = "mdsumner@gmail.com", role = c("aut", "cre"))
 Description: Convert typical spatial data into geofacet grid specifications.
