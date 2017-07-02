@@ -1,0 +1,39 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# gfmaker
+
+This packages takes a spatial-y thing and gives a rasterized row/col index of each object's centroid (the vertex-weighted inner centroid, I believe). The maximum dimensions of the grid can be controlled in the function `gfmaker`. It doesn't work well, because the best placement 'pseudo-geographically' is on a very fine grid, and this makes all the panels very small. If the grid is coarser it works fine but the geographic magic is very watered down. 
+
+The crux problem is that geofacet expects a full grid in row/col form, and the panels are expected to fill each cell completely. It would be better if a much finer grid could be specficied, with panels expanding to the space available to them (before touching othe panels)
+
+
+If anyone is keen to work on this, let me know!  I think this is good enough for my key purpose, which is a literal tiling of the southern ocean. 
+
+## Installation
+
+You can install gfmaker from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("mdsumner/gfmaker")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+source("inst/examples/gfmap.R", echo = TRUE)
+```
