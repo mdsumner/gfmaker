@@ -12,3 +12,4 @@ Imports: spbabel (> 0.4.8),
     tibble,
     dplyr,
     raster
+Remotes: mdsumner/spbabel
